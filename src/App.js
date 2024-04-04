@@ -11,12 +11,12 @@ const Container = styled.div`
   margin: auto;
   border-radius: 4px;
   box-shadow: 0 3px 6px 0 #555;
-  background: white;
+  background: #13131a;
   font-family: Montserrat;
 `;
 
 const AppLabel = styled.span`
-  color: black;
+  color: white;
   margin: 20px auto;
   font-size: 18px;
   font-weight: bold;
