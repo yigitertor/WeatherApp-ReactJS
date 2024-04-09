@@ -26,7 +26,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 380px;
-  height: 820px;
+  height: 620px; //820px on figma
   padding: 20px 10px;
   margin: auto;
   border-radius: 4px;

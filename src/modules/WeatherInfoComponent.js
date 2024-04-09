@@ -3,34 +3,46 @@ import styled from "styled-components";
 import { WeatherIcons } from "../App";
 
 export const WeatherInfoIcons = {
-  sunset: "/icons/temp.svg",
-  sunrise: "/icons/temp.svg",
-  humidity: "/icons/humidity.svg",
-  wind: "/icons/wind.svg",
-  pressure: "/icons/pressure.svg",
+  Sunset: "/icons/temp.svg",
+  Sunrise: "/icons/temp.svg",
+  Humidity: "/icons/humidity.svg",
+  Wind: "/icons/wind.svg",
+  Pressure: "/icons/pressure.svg",
+  Thermal_Sensation: "/icons/thermometer.svg",
 };
 const Location = styled.span`
   margin: 15px auto;
   text-transform: capitalize;
   font-size: 28px;
   font-weight: bold;
+  color: White;
 `;
 const Condition = styled.span`
   margin: 20px auto;
   text-transform: capitalize;
   font-size: 14px;
+  color: #ffffff;
+
   & span {
-    font-size: 28px;
+    width: 97px;
+    height: 58px;
+
+    /* Heading xl */
+    font-family: "Nunito";
+    font-style: normal;
+    font-weight: 800;
+    font-size: 48px;
+    line-height: 120%;
+    /* identical to box height, or 58px */
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    /* Base/White */
+    color: #ffffff;
   }
 `;
-const WeatherInfoLabel = styled.span`
-  margin: 20px 25px 10px;
-  text-transform: capitalize;
-  text-align: start;
-  width: 90%;
-  font-weight: bold;
-  font-size: 14px;
-`;
+
 const WeatherIcon = styled.img`
   width: 100px;
   height: 100px;
@@ -47,18 +59,26 @@ const WeatherContainer = styled.div`
 
 const WeatherInfoContainer = styled.div`
   display: flex;
-  width: 90%;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 4px 16px;
+  gap: 8px;
+
+  height: 292px;
 `;
+
 const InfoContainer = styled.div`
   display: flex;
-  margin: 5px 10px;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
+  gap: 24px;
+
+  width: 327px;
+  height: 56px;
+  border-bottom: 1px solid #1c1c27;
+  background: #16161f;
+  border-radius: 12px;
 `;
 const InfoIcon = styled.img`
   width: 36px;
@@ -66,12 +86,23 @@ const InfoIcon = styled.img`
 `;
 const InfoLabel = styled.span`
   display: flex;
-  flex-direction: column;
-  font-size: 14px;
-  margin: 15px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  gap: 24px;
+
+  width: 327px;
+  height: 56px;
+  color: #fafafa;
   & span {
-    font-size: 12px;
-    text-transform: capitalize;
+    //styleName: Heading xs;
+    font-family: Nunito;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 19.6px;
+    text-align: center;
+    color: #bfbfd4;
   }
 `;
 
@@ -81,12 +112,13 @@ const WeatherInfoComponent = (props) => {
     <InfoContainer>
       <InfoIcon src={WeatherInfoIcons[name]} />
       <InfoLabel>
-        {value}
         <span>{name}</span>
+        {value}
       </InfoLabel>
     </InfoContainer>
   );
 };
+
 const WeatherComponent = (props) => {
   const { weather } = props;
   const isDay = weather?.weather[0].icon?.includes("d");
@@ -106,19 +138,22 @@ const WeatherComponent = (props) => {
       </WeatherContainer>
       <Location>{`${weather?.name}, ${weather?.sys?.country}`}</Location>
 
-      <WeatherInfoLabel>Weather Info</WeatherInfoLabel>
       <WeatherInfoContainer>
         <WeatherInfoComponent
-          name={isDay ? "sunset" : "sunrise"}
+          name={"Thermal_Sensation"}
+          value={`${Math.floor(weather?.main?.feels_like - 273)}°C`}
+        />
+        <WeatherInfoComponent
+          name={isDay ? "Sunset" : "Sunrise"}
           value={`${getTime(weather?.sys[isDay ? "sunset" : "sunrise"])}`}
         />
         <WeatherInfoComponent
-          name={"humidity"}
+          name={"Humidity"}
           value={weather?.main?.humidity}
         />
-        <WeatherInfoComponent name={"wind"} value={weather?.wind?.speed} />
+        <WeatherInfoComponent name={"Wind"} value={weather?.wind?.speed} />
         <WeatherInfoComponent
-          name={"pressure"}
+          name={"Pressure"}
           value={weather?.main?.pressure}
         />
       </WeatherInfoContainer>
