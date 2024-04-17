@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import React, { useState } from "react";
+import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
@@ -74,8 +75,35 @@ const AppLogo = styled.img`
   margin-bottom: 140px;
 `;
 
-const CityComponent = (props) => {
-  const { updateCity, fetchWeather } = props;
+const CityComponent = ({ updateCity, fetchWeather }) => {
+  const [city, setCity] = useState("");
+
+  const handleInputChange = (e) => {
+    setCity(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    fetchWeather(city);
+    setCity(""); // Şehir bilgisini gönderdikten sonra inputu temizle
+  };
+
+  const handleLocationClick = () => {
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        const { latitude, longitude } = position.coords;
+        // Koordinatları kullanarak hava durumu bilgisi al
+        const response = await Axios.get(
+          `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=8297725875f39e37ed6a7bc2e1fc738c`
+        );
+        fetchWeather(response.data.name); // Şehir adını gönder
+      },
+      (error) => {
+        console.error("Konum bilgisini alırken bir hata oluştu:", error);
+      }
+    );
+  };
+
   return (
     <>
       <AppLogo src={"/icons/logo.png"} />
@@ -85,17 +113,19 @@ const CityComponent = (props) => {
       <ChooseCityLabel>
         Choose a location to see the weather forecast
       </ChooseCityLabel>
-      <SearchBox onSubmit={fetchWeather}>
-        <button type="submit">
+      <SearchBox onSubmit={handleSubmit}>
+        <button type="button" onClick={handleLocationClick}>
           <FontAwesomeIcon icon={faLocationDot} />
         </button>
         <input
-          onChange={(e) => updateCity(e.target.value)}
+          value={city}
+          onChange={handleInputChange}
           placeholder="Search location"
         />
-        <button type={"submit"}>Search</button>
+        <button type="submit">Search</button>
       </SearchBox>
     </>
   );
 };
+
 export default CityComponent;

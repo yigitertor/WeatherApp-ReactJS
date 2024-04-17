@@ -43,21 +43,25 @@ const CloseButton = styled.span`
 `;
 
 function App() {
-  const [city, updateCity] = useState();
   const [weather, updateWeather] = useState();
-  const fetchWeather = async (e) => {
-    e.preventDefault();
-    const response = await Axios.get(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8297725875f39e37ed6a7bc2e1fc738c`
-    );
-    updateWeather(response.data);
+
+  const fetchWeatherByLocation = async (city) => {
+    try {
+      const response = await Axios.get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8297725875f39e37ed6a7bc2e1fc738c`
+      );
+      updateWeather(response.data);
+    } catch (error) {
+      console.error("Hava durumu bilgisini alırken bir hata oluştu:", error);
+    }
   };
+
   return (
     <Container>
-      {city && weather ? (
-        <WeatherComponent weather={weather} city={city} />
+      {weather ? (
+        <WeatherComponent weather={weather} />
       ) : (
-        <CityComponent updateCity={updateCity} fetchWeather={fetchWeather} />
+        <CityComponent fetchWeather={fetchWeatherByLocation} />
       )}
     </Container>
   );
