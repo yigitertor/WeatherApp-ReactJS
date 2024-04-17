@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import React from "react";
+import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 
 const SearchBox = styled.form`
   display: flex;
@@ -27,7 +29,8 @@ const SearchBox = styled.form`
     cursor: pointer;
     font-weight: bold;
     border-radius: 8px;
-    margin-left: 2px;
+    margin-left: 3px;
+    margin-right: 3px;
   }
 `;
 const ChooseCityLabel = styled.span`
@@ -83,6 +86,9 @@ const CityComponent = (props) => {
         Choose a location to see the weather forecast
       </ChooseCityLabel>
       <SearchBox onSubmit={fetchWeather}>
+        <button type="submit">
+          <FontAwesomeIcon icon={faLocationDot} />
+        </button>
         <input
           onChange={(e) => updateCity(e.target.value)}
           placeholder="Search location"
