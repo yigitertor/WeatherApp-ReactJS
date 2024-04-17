@@ -11,6 +11,10 @@ const SearchBox = styled.form`
   margin: 20px;
 
   & input {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
     background: #1e1e29;
     border-radius: 8px;
     padding: 10px;
@@ -75,11 +79,61 @@ const AppLogo = styled.img`
   margin-bottom: 140px;
 `;
 
+const AutocompleteList = styled.ul`
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  background-color: #1e1e29;
+  border-radius: 8px;
+  width: 208px;
+  max-height: 200px;
+  overflow-y: auto;
+  top: calc(100% + -335px);
+  left: 50%;
+  transform: translateX(-50%);
+`;
+
+const AutocompleteItem = styled.li`
+  padding: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  &:hover {
+    background-color: #3d3d4d;
+  }
+`;
+
 const CityComponent = ({ updateCity, fetchWeather }) => {
   const [city, setCity] = useState("");
+  const [autocompleteCities, setAutocompleteCities] = useState([]);
 
-  const handleInputChange = (e) => {
-    setCity(e.target.value);
+  const handleInputChange = async (e) => {
+    const value = e.target.value;
+    setCity(value);
+    // API'ye istek gönder ve öneri listesini güncelle
+    try {
+      const response = await Axios.get(
+        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${value}`,
+        {
+          headers: {
+            "X-RapidAPI-Key":
+              "64a947ac66msh6990946afef4b41p186a5djsn3522f68f3e2e",
+            "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+          },
+        }
+      );
+      const cities = response.data.data.map((city) => city.city);
+      setAutocompleteCities(cities);
+    } catch (error) {
+      console.error("API'den şehir verisi alınırken bir hata oluştu:", error);
+    }
+  };
+
+  const handleAutocompleteClick = (cityName) => {
+    setCity(cityName);
+    setAutocompleteCities([]);
   };
 
   const handleSubmit = (e) => {
@@ -96,7 +150,7 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
         const response = await Axios.get(
           `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=8297725875f39e37ed6a7bc2e1fc738c`
         );
-        fetchWeather(response.data.name); // Şehir adını gönder
+        fetchWeather(response.data.name);
       },
       (error) => {
         console.error("Konum bilgisini alırken bir hata oluştu:", error);
@@ -123,6 +177,19 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
           placeholder="Search location"
         />
         <button type="submit">Search</button>
+        {/* Öneri listesi */}
+        {autocompleteCities.length > 0 && (
+          <AutocompleteList>
+            {autocompleteCities.map((cityName, index) => (
+              <AutocompleteItem
+                key={index}
+                onClick={() => handleAutocompleteClick(cityName)}
+              >
+                {cityName}
+              </AutocompleteItem>
+            ))}
+          </AutocompleteList>
+        )}
       </SearchBox>
     </>
   );
