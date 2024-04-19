@@ -124,13 +124,15 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
           },
         }
       );
-      const cities = response.data.data.map((city) => city.city);
+      const cities = response.data.data.map((city) => ({
+        name: city.city,
+        country: city.countryCode,
+      }));
       setAutocompleteCities(cities);
     } catch (error) {
       console.error("API'den şehir verisi alınırken bir hata oluştu:", error);
     }
   };
-
   const handleAutocompleteClick = (cityName) => {
     setCity(cityName);
     setAutocompleteCities([]);
@@ -180,12 +182,12 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
 
         {autocompleteCities.length > 0 && (
           <AutocompleteList>
-            {autocompleteCities.map((cityName, index) => (
+            {autocompleteCities.map((city, index) => (
               <AutocompleteItem
                 key={index}
-                onClick={() => handleAutocompleteClick(cityName)}
+                onClick={() => handleAutocompleteClick(city.name)}
               >
-                {cityName}
+                {`${city.name}, ${city.country}`}
               </AutocompleteItem>
             ))}
           </AutocompleteList>
