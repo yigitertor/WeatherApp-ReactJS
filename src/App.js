@@ -42,8 +42,11 @@ const CloseButton = styled.span`
   position: absolute;
 `;
 
+// App.js
+
 function App() {
   const [weather, updateWeather] = useState();
+  const [showCityComponent, setShowCityComponent] = useState(true); // Ana arama ekranını göstermek için durum
 
   const fetchWeatherByLocation = async (city) => {
     try {
@@ -51,17 +54,26 @@ function App() {
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8297725875f39e37ed6a7bc2e1fc738c`
       );
       updateWeather(response.data);
+      setShowCityComponent(false); // Hava durumu bilgilerini aldığımızda ana arama ekranını gizle
     } catch (error) {
       console.error("Hava durumu bilgisini alırken bir hata oluştu:", error);
     }
   };
 
+  const handleBackButtonClick = () => {
+    updateWeather(null);
+    setShowCityComponent(true);
+  };
+
   return (
     <Container>
-      {weather ? (
-        <WeatherComponent weather={weather} />
-      ) : (
+      {showCityComponent ? ( // Ana arama ekranını göster
         <CityComponent fetchWeather={fetchWeatherByLocation} />
+      ) : (
+        <WeatherComponent
+          weather={weather}
+          onBackButtonClick={handleBackButtonClick}
+        />
       )}
     </Container>
   );

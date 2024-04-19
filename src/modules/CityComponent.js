@@ -177,7 +177,7 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
           placeholder="Search location"
         />
         <button type="submit">Search</button>
-        {/* Öneri listesi */}
+
         {autocompleteCities.length > 0 && (
           <AutocompleteList>
             {autocompleteCities.map((cityName, index) => (

@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { WeatherIcons } from "../App";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 export const WeatherInfoIcons = {
   Sunset: "/icons/temp.svg",
@@ -63,7 +65,6 @@ const WeatherInfoContainer = styled.div`
   align-items: flex-start;
   padding: 4px 16px;
   gap: 8px;
-
   height: 292px;
 `;
 
@@ -119,8 +120,19 @@ const WeatherInfoComponent = (props) => {
   );
 };
 
+const BackButton = styled.span`
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  cursor: pointer;
+  color: white;
+  background-color: #7692c9;
+  padding: 5px 10px;
+  border-radius: 5px;
+`;
+
 const WeatherComponent = (props) => {
-  const { weather } = props;
+  const { weather, onBackButtonClick } = props;
   const isDay = weather?.weather[0].icon?.includes("d");
   const getTime = (timeStamp) => {
     return `${new Date(timeStamp * 1000).getHours()} : ${new Date(
@@ -157,6 +169,9 @@ const WeatherComponent = (props) => {
           value={weather?.main?.pressure}
         />
       </WeatherInfoContainer>
+      <BackButton onClick={onBackButtonClick}>
+        <FontAwesomeIcon icon={faArrowLeft} />
+      </BackButton>
     </>
   );
 };
