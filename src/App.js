@@ -27,9 +27,9 @@ const Container = styled.div`
   align-items: center;
   width: 380px;
   height: 620px; //820px on figma
-  padding: 20px 10px;
+  padding: 10px 10px 30px;
   margin: auto;
-  border-radius: 4px;
+  border-radius: 10px;
   box-shadow: 0 3px 6px 0 #555;
   background: #13131a;
 `;

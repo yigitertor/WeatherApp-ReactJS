@@ -112,7 +112,7 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
   const handleInputChange = async (e) => {
     const value = e.target.value;
     setCity(value);
-    // API'ye istek gönder ve öneri listesini güncelle
+
     try {
       const response = await Axios.get(
         `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?minPopulation=1000000&namePrefix=${value}`,
@@ -139,7 +139,7 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     fetchWeather(city);
-    setCity(""); // Şehir bilgisini gönderdikten sonra inputu temizle
+    setCity("");
   };
 
   const handleLocationClick = () => {

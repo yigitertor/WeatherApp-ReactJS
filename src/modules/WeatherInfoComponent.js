@@ -13,7 +13,7 @@ export const WeatherInfoIcons = {
   Thermal_Sensation: "/icons/thermometer.svg",
 };
 const Location = styled.span`
-  margin: 15px auto;
+  margin: 10px auto;
   text-transform: capitalize;
   font-size: 28px;
   font-weight: bold;
@@ -29,18 +29,15 @@ const Condition = styled.span`
     width: 97px;
     height: 58px;
 
-    /* Heading xl */
     font-family: "Nunito";
     font-style: normal;
     font-weight: 800;
     font-size: 48px;
     line-height: 120%;
-    /* identical to box height, or 58px */
+
     display: flex;
     align-items: center;
     text-align: right;
-
-    /* Base/White */
     color: #ffffff;
   }
 `;
@@ -50,14 +47,67 @@ const WeatherIcon = styled.img`
   height: 100px;
   margin: 5px auto;
 `;
-const WeatherContainer = styled.div`
+const WeatherContainer = styled.div.attrs((props) => ({
+  style: {
+    backgroundImage: (() => {
+      const isDay = isDaytime(props.weather?.weather[0].icon);
+      const weatherCondition = props.weather?.weather[0].main;
+      let imageUrl;
+
+      if (isDay) {
+        imageUrl = getDaytimeImage(weatherCondition);
+      } else {
+        imageUrl = getNighttimeImage(weatherCondition);
+      }
+
+      return `url('${imageUrl}')`;
+    })(),
+  },
+}))`
   display: flex;
   width: 100%;
-  margin: 30px auto;
+  height: 100%;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 10px;
 `;
+
+// Saatin gündüz veya gece olup olmadığını kontrol et
+const isDaytime = (icon) => {
+  const hour = new Date().getHours();
+  return hour >= 6 && hour < 18;
+};
+
+// Gece için arka plan resmi
+const getNighttimeImage = (weatherCondition) => {
+  switch (weatherCondition) {
+    case "Clear":
+      return "https://pics.craiyon.com/2023-11-16/BjUZcXlZRQWOWgYFMXELWw.webp";
+    case "Clouds":
+      return "https://img.freepik.com/premium-vector/night-sky-background-with-clouds-stars_116220-98.jpg";
+    case "Rain":
+      return "https://pics.craiyon.com/2023-11-29/lythZKvRTQqaSHjk21ABXA.webp";
+    default:
+      return "https://pics.craiyon.com/2023-11-16/BjUZcXlZRQWOWgYFMXELWw.webp";
+  }
+};
+
+// Gündüz için arka plan resmi
+const getDaytimeImage = (weatherCondition) => {
+  switch (weatherCondition) {
+    case "Clear":
+      return "https://img.freepik.com/free-vector/sky-background-video-conferencing_23-2148630092.jpg?t=st=1713552459~exp=1713556059~hmac=85ab85d23c68d05e032249590e7f65342ba107f0c258b761df18d17b86ede757&w=900";
+    case "Clouds":
+      return "https://www.shutterstock.com/image-photo/dramatic-black-cloud-before-rainy-260nw-549197416.jpg";
+    case "Rain":
+      return "https://cdn.girls.buzz/images/girls.buzz.max-1440x900.webp";
+    default:
+      return "https://upload.wikimedia.org/wikipedia/commons/0/07/Clear_Sky.jpg";
+  }
+};
 
 const WeatherInfoContainer = styled.div`
   display: flex;
@@ -141,7 +191,7 @@ const WeatherComponent = (props) => {
   };
   return (
     <>
-      <WeatherContainer>
+      <WeatherContainer weather={weather}>
         <Condition>
           <span>{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
           {`  |  ${weather?.weather[0].description}`}
