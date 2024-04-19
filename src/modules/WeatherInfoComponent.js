@@ -181,6 +181,42 @@ const BackButton = styled.span`
   border-radius: 5px;
 `;
 
+const ForecastButton = styled.button`
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  cursor: pointer;
+  overflow-y: auto;
+  top: calc(35%);
+  left: 42%;
+  transform: translateX(-50%);
+  font-family: Nunito;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+  background-color: #7692c9;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+`;
+
+const CurrentWeatherLabel = styled.span`
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  width: 208px;
+  max-height: 200px;
+  overflow-y: auto;
+  top: calc(7%);
+  left: 46%;
+  transform: translateX(-50%);
+  font-family: Nunito;
+  font-size: 14px;
+  font-weight: 700;
+  color: white;
+`;
+
 const WeatherComponent = (props) => {
   const { weather, onBackButtonClick } = props;
   const isDay = weather?.weather[0].icon?.includes("d");
@@ -191,12 +227,17 @@ const WeatherComponent = (props) => {
   };
   return (
     <>
+      <CurrentWeatherLabel>Current Weather</CurrentWeatherLabel>
       <WeatherContainer weather={weather}>
         <Condition>
           <span>{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
           {`  |  ${weather?.weather[0].description}`}
         </Condition>
         <WeatherIcon src={WeatherIcons[weather?.weather[0].icon]} />
+        <BackButton onClick={onBackButtonClick}>
+          <FontAwesomeIcon icon={faArrowLeft} />
+        </BackButton>
+        <ForecastButton>Forecast</ForecastButton>
       </WeatherContainer>
       <Location>{`${weather?.name}, ${weather?.sys?.country}`}</Location>
 
