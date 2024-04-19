@@ -115,7 +115,7 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
     // API'ye istek gönder ve öneri listesini güncelle
     try {
       const response = await Axios.get(
-        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?namePrefix=${value}`,
+        `https://wft-geo-db.p.rapidapi.com/v1/geo/cities?minPopulation=1000000&namePrefix=${value}`,
         {
           headers: {
             "X-RapidAPI-Key":
