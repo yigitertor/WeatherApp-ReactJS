@@ -1,41 +1,44 @@
-# Getting Started with Create React App
+# TypeWeather 🌦️
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+TypeWeather, kullanıcıların hava durumu tahminlerini kolayca görmelerini sağlayan bir web uygulamasıdır. Kullanıcılar, hava durumunu öğrenmek istedikleri bir şehri arayabilir veya konumlarını kullanarak otomatik olarak hava durumunu alabilirler.
 
-## Available Scripts
+![TypeWeather Logo](./public/icons/logo.png)
 
-In the project directory, you can run:
+## Özellikler
 
-### `npm start`
+- **Şehir Arama ve Otomatik Tamamlama**: Kullanıcılar, istedikleri bir şehri arama kutusuna yazarken, otomatik tamamlama özelliği sayesinde [GeoDB Cities API](https://rapidapi.com/wirefreethought/api/geodb-cities) kullanılarak şehir isimlerini hızlıca bulabilirler.
+- **Konum Tabanlı Hava Durumu**: Kullanıcılar, konum izni verdiklerinde, tarayıcı tarafında bulunan [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation) kullanılarak otomatik olarak bulundukları konumun hava durumu tahminlerini alabilirler.
+- **Dinamik Arka Planlar**: Hava durumuna göre arka plan rengi değişir.
+- **Hava Durumu İkonları**: Hava durumu tahminlerinde ilgili hava durumu ikonları gösterilir.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Kullanılan Teknolojiler
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **React**: Kullanıcı arayüzü için React kullanılmıştır.
+- **Styled Components**: CSS stil dosyalarını daha modüler ve okunabilir hale getirmek için kullanılmıştır.
+- **Axios**: HTTP istekleri yapmak için Axios kullanılmıştır.
 
-### `npm test`
+## API ve Konum Özelliği Detayları
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **Hava Durumu API'si**: Hava durumu verileri almak için [OpenWeatherMap API](https://openweathermap.org/api) kullanılmıştır. Bu API, hava durumu tahminleri ve ilgili ikonları sağlar.
+- **GeoDB Cities API**: Otomatik tamamlama özelliği için kullanılan [GeoDB Cities API](https://rapidapi.com/wirefreethought/api/geodb-cities), şehir verilerini sağlar ve kullanıcıların hızlıca şehirlerini bulmasını sağlar.
+- **Konum İzni**: Kullanıcının konumunu almak için tarayıcı tarafında bulunan [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation) kullanılmıştır. Kullanıcı izin verdiğinde, cihazın GPS verileri kullanılarak konum bilgisi alınır.
 
-### `npm run build`
+## Kurulum
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. Bu deposunu klonlayın: `git clone https://github.com/example/type-weather.git`
+2. Proje dizinine gidin: `cd type-weather`
+3. Gerekli paketleri yükleyin: `npm install`
+4. Uygulamayı başlatın: `npm start`
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Katkıda Bulunma
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+1. Bu depoyu çatallayın (fork).
+2. Yeni bir dal (branch) oluşturun: `git checkout -b yeni-ozellik`
+3. Değişikliklerinizi yapın ve bunları kaydedin (commit): `git commit -am 'Yeni özellik ekle'`
+4. Dalınıza (branch) itiş yapın: `git push origin yeni-ozellik`
+5. Bir birleştirme isteği (pull request) gönderin.
 
-### `npm run eject`
+## Lisans
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Bu proje MIT Lisansı altında lisanslanmıştır. Daha fazla bilgi için [LICENSE](LICENSE) dosyasına bakabilirsiniz.
 
