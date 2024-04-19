@@ -199,6 +199,15 @@ const ForecastButton = styled.button`
   border-radius: 5px;
   border: none;
   outline: none;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  @media screen and (max-width: 768px) {
+    left: 30%;
+  }
 `;
 
 const CurrentWeatherLabel = styled.span`
