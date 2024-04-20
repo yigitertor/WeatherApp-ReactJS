@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import React, { useState } from "react";
 import Axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,6 +23,12 @@ const SearchBox = styled.form`
     outline: none;
     font-weight: bold;
     color: white;
+
+    ${({ isEmpty }) =>
+      isEmpty &&
+      css`
+        border: 2px solid red;
+      `}
   }
   & button {
     background-color: #7692c9;
@@ -42,18 +48,15 @@ const ChooseCityLabel = styled.span`
   width: 311px;
   height: 20px;
 
-  /* Text sm */
   font-family: "Nunito";
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 140%;
 
-  /* identical to box height, or 20px */
   align-items: center;
   text-align: center;
 
-  /* Base/Gray 200 */
   color: #bfbfd4;
 `;
 
@@ -140,6 +143,10 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!city.trim()) {
+      alert("Please enter a location!");
+      return;
+    }
     fetchWeather(city);
     setCity("");
   };
