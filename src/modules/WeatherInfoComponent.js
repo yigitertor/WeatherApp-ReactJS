@@ -77,13 +77,12 @@ const WeatherContainer = styled.div.attrs((props) => ({
   border-radius: 10px;
 `;
 
-// Saatin gündüz veya gece olup olmadığını kontrol et
 const isDaytime = (icon) => {
   const hour = new Date().getHours();
   return hour >= 6 && hour < 18;
 };
 
-// Gece için arka plan resmi
+// Gece arka plan
 const getNighttimeImage = (weatherCondition) => {
   switch (weatherCondition) {
     case "Clear":
@@ -97,7 +96,7 @@ const getNighttimeImage = (weatherCondition) => {
   }
 };
 
-// Gündüz için arka plan resmi
+// Gündüz arka plan
 const getDaytimeImage = (weatherCondition) => {
   switch (weatherCondition) {
     case "Clear":
@@ -230,7 +229,7 @@ const CurrentWeatherLabel = styled.span`
 
 const WeatherComponent = (props) => {
   const { weather, onBackButtonClick } = props;
-  const [showForecast, setShowForecast] = useState(false); // Tahmin sayfasının görünürlüğünü kontrol etmek için durum ekleyelim
+  const [showForecast, setShowForecast] = useState(false);
 
   const isDay = weather?.weather[0].icon?.includes("d");
   const getTime = (timeStamp) => {
@@ -240,7 +239,7 @@ const WeatherComponent = (props) => {
   };
   return (
     <>
-      {showForecast ? ( // Tahmin sayfası görünürse anlık hava durumu sonuçlarını gizle
+      {showForecast ? (
         <ForecastContainer weather={weather} />
       ) : (
         <>
@@ -257,7 +256,6 @@ const WeatherComponent = (props) => {
             <ForecastButton onClick={() => setShowForecast(true)}>
               Forecast
             </ForecastButton>{" "}
-            {/* Tahmin butonuna tıklamada tahmin sayfasının görünürlüğünü true yap */}
           </WeatherContainer>
           <Location>{`${weather?.name}, ${weather?.sys?.country}`}</Location>
           <WeatherInfoContainer>

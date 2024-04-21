@@ -34,19 +34,9 @@ const Container = styled.div`
   background: #13131a;
 `;
 
-const CloseButton = styled.span`
-  padding: 2px 3px;
-  background-color: black;
-  border-radius: 50%;
-  color: white;
-  position: absolute;
-`;
-
-// App.js
-
 function App() {
   const [weather, updateWeather] = useState();
-  const [showCityComponent, setShowCityComponent] = useState(true); // Ana arama ekranını göstermek için durum
+  const [showCityComponent, setShowCityComponent] = useState(true);
 
   const fetchWeatherByLocation = async (city) => {
     try {
@@ -54,7 +44,7 @@ function App() {
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=8297725875f39e37ed6a7bc2e1fc738c`
       );
       updateWeather(response.data);
-      setShowCityComponent(false); // Hava durumu bilgilerini aldığımızda ana arama ekranını gizle
+      setShowCityComponent(false);
     } catch (error) {
       console.error("Hava durumu bilgisini alırken bir hata oluştu:", error);
     }
@@ -67,7 +57,7 @@ function App() {
 
   return (
     <Container>
-      {showCityComponent ? ( // Ana arama ekranını göster
+      {showCityComponent ? (
         <CityComponent fetchWeather={fetchWeatherByLocation} />
       ) : (
         <WeatherComponent
