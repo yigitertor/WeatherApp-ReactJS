@@ -6,12 +6,12 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import ForecastContainer from "./ForecastContainer";
 
 const WeatherInfoIcons = {
-  Sunset: "/icons/sunset.svg",
-  Sunrise: "/icons/sunrise.svg",
-  Humidity: "/icons/humidity.svg",
-  Wind: "/icons/wind.svg",
-  Pressure: "/icons/pressure.svg",
-  Thermal_Sensation: "/icons/thermometer.svg",
+  Sunset: "icons/sunset.svg",
+  Sunrise: "icons/sunrise.svg",
+  Humidity: "icons/humidity.svg",
+  Wind: "icons/wind.svg",
+  Pressure: "icons/pressure.svg",
+  Thermal_Sensation: "icons/thermometer.svg",
 };
 
 const Location = styled.span`
