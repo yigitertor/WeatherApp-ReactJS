@@ -24,27 +24,43 @@ const ForecastContainer = ({ weather, onBackButtonClick }) => {
 
   if (!forecast) return null;
 
-  // Tahminleri gün bazında gruplayalım
+  const today = new Date();
+  const nextFiveDays = [];
+  for (let i = 1; i <= 5; i++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + i);
+    nextFiveDays.push(
+      date.toLocaleDateString(undefined, {
+        weekday: "long",
+        month: "long",
+        day: "numeric",
+      })
+    );
+  }
+
   const groupedForecasts = {};
   forecast.list.forEach((item) => {
     const date = new Date(item.dt_txt).toLocaleDateString(undefined, {
       weekday: "long",
       month: "long",
       day: "numeric",
-    }); // Tarih ve haftanın gününü al
-    if (!groupedForecasts[date]) {
-      groupedForecasts[date] = {
-        date: date,
-        temps: [],
-        icon: item.weather[0].icon,
-        description: item.weather[0].description,
-      };
+    });
+    if (nextFiveDays.includes(date)) {
+      if (!groupedForecasts[date]) {
+        groupedForecasts[date] = {
+          date: date,
+          temps: [],
+          icon: item.weather[0].icon,
+          description: item.weather[0].description,
+        };
+      }
+      groupedForecasts[date].temps.push(item.main.temp);
     }
-    groupedForecasts[date].temps.push(item.main.temp);
   });
 
   return (
     <Container>
+      <Header>5-Day Weather Forecast</Header>
       <BackButton onClick={onBackButtonClick}>
         <FontAwesomeIcon icon={faArrowLeft} />
       </BackButton>
@@ -52,14 +68,16 @@ const ForecastContainer = ({ weather, onBackButtonClick }) => {
         {Object.values(groupedForecasts).map((forecast, index) => (
           <ForecastBox key={index}>
             <DateText>{forecast.date}</DateText>
-            <IconImage
-              src={`https://openweathermap.org/img/wn/${forecast.icon}.png`}
-              alt={forecast.description}
-            />
-            <TemperatureText>{`${Math.round(
-              forecast.temps.reduce((acc, temp) => acc + temp, 0) /
-                forecast.temps.length
-            )}°C`}</TemperatureText>
+            <WeatherInfo>
+              <IconImage
+                src={`https://openweathermap.org/img/wn/${forecast.icon}.png`}
+                alt={forecast.description}
+              />
+              <TemperatureText>{`${Math.round(
+                forecast.temps.reduce((acc, temp) => acc + temp, 0) /
+                  forecast.temps.length
+              )}°C`}</TemperatureText>
+            </WeatherInfo>
           </ForecastBox>
         ))}
       </ForecastWrapper>
@@ -93,7 +111,7 @@ const ForecastWrapper = styled.div`
 
 const ForecastBox = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   background-color: #1e1e29;
   padding: 20px;
@@ -107,12 +125,27 @@ const DateText = styled.span`
   margin-bottom: 10px;
 `;
 
+const WeatherInfo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const IconImage = styled.img`
   width: 50px;
   height: 50px;
-  margin-bottom: 10px;
+  margin-right: 10px;
 `;
 
 const TemperatureText = styled.span`
   font-size: 24px;
+`;
+
+const Header = styled.h2`
+  color: white;
+  font-size: 24px;
+  margin-bottom: 10px;
+  margin-top: 0;
+  text-align: center;
+  font-family: "Nunito";
+  font-style: normal;
 `;
