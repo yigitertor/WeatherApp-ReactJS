@@ -7,9 +7,11 @@ TypeWeather, kullanıcıların hava durumu tahminlerini kolayca görmelerini sa�
 ## Özellikler
 
 - **Şehir Arama ve Otomatik Tamamlama**: Kullanıcılar, istedikleri bir şehri arama kutusuna yazarken, otomatik tamamlama özelliği sayesinde [GeoDB Cities API](https://rapidapi.com/wirefreethought/api/geodb-cities) kullanılarak şehir isimlerini hızlıca bulabilirler.
-- **Konum Tabanlı Hava Durumu**: Kullanıcılar, konum izni verdiklerinde, tarayıcı tarafında bulunan [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation) kullanılarak otomatik olarak bulundukları konumun hava durumu tahminlerini alabilirler.
-- **Dinamik Arka Planlar**: Hava durumuna göre arka plan rengi değişir.
+- **Konum Tabanlı Hava Durumu**: Kullanıcılar, konum izni verdiklerinde, tarayıcı tarafında bulunan [Geolocation API](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation) kullanılarak otomatik olarak bulundukları konumun anlık hava durumu tahminlerini alabilirler.
+- **Dinamik Arka Planlar**: Hava durumuna göre arka plan resmi değişir.
 - **Hava Durumu İkonları**: Hava durumu tahminlerinde ilgili hava durumu ikonları gösterilir.
+- **Hata Kontrolü**: Kullanıcılar boş bir arama kutusu ile arama yapmaya çalıştıklarında, hata mesajı gösterilir ve kullanıcıya doğru bir şehir adı girmesi gerektiği hatırlatılır. 
+- **Gelecek Hava Durumu Tahmini**: Uygulama, gelecek 5 günün hava durumu tahminlerini kullanıcıya gösterir.
 
 ## Kullanılan Teknolojiler
 
