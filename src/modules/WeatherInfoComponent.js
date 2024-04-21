@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { WeatherIcons } from "../App";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import ForecastContainer from "./ForecastContainer";
 
-export const WeatherInfoIcons = {
+const WeatherInfoIcons = {
   Sunset: "/icons/temp.svg",
   Sunrise: "/icons/temp.svg",
   Humidity: "/icons/humidity.svg",
@@ -12,6 +13,7 @@ export const WeatherInfoIcons = {
   Pressure: "/icons/pressure.svg",
   Thermal_Sensation: "/icons/thermometer.svg",
 };
+
 const Location = styled.span`
   margin: 10px auto;
   text-transform: capitalize;
@@ -228,6 +230,8 @@ const CurrentWeatherLabel = styled.span`
 
 const WeatherComponent = (props) => {
   const { weather, onBackButtonClick } = props;
+  const [showForecast, setShowForecast] = useState(false); // Tahmin sayfasının görünürlüğünü kontrol etmek için durum ekleyelim
+
   const isDay = weather?.weather[0].icon?.includes("d");
   const getTime = (timeStamp) => {
     return `${new Date(timeStamp * 1000).getHours()} : ${new Date(
@@ -236,42 +240,50 @@ const WeatherComponent = (props) => {
   };
   return (
     <>
-      <CurrentWeatherLabel>Current Weather</CurrentWeatherLabel>
-      <WeatherContainer weather={weather}>
-        <Condition>
-          <span>{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
-          {`  |  ${weather?.weather[0].description}`}
-        </Condition>
-        <WeatherIcon src={WeatherIcons[weather?.weather[0].icon]} />
-        <BackButton onClick={onBackButtonClick}>
-          <FontAwesomeIcon icon={faArrowLeft} />
-        </BackButton>
-        <ForecastButton>Forecast</ForecastButton>
-      </WeatherContainer>
-      <Location>{`${weather?.name}, ${weather?.sys?.country}`}</Location>
-
-      <WeatherInfoContainer>
-        <WeatherInfoComponent
-          name={"Thermal_Sensation"}
-          value={`${Math.floor(weather?.main?.feels_like - 273)}°C`}
-        />
-        <WeatherInfoComponent
-          name={isDay ? "Sunset" : "Sunrise"}
-          value={`${getTime(weather?.sys[isDay ? "sunset" : "sunrise"])}`}
-        />
-        <WeatherInfoComponent
-          name={"Humidity"}
-          value={weather?.main?.humidity}
-        />
-        <WeatherInfoComponent name={"Wind"} value={weather?.wind?.speed} />
-        <WeatherInfoComponent
-          name={"Pressure"}
-          value={weather?.main?.pressure}
-        />
-      </WeatherInfoContainer>
-      <BackButton onClick={onBackButtonClick}>
-        <FontAwesomeIcon icon={faArrowLeft} />
-      </BackButton>
+      {showForecast ? ( // Tahmin sayfası görünürse anlık hava durumu sonuçlarını gizle
+        <ForecastContainer weather={weather} />
+      ) : (
+        <>
+          <CurrentWeatherLabel>Current Weather</CurrentWeatherLabel>
+          <WeatherContainer weather={weather}>
+            <Condition>
+              <span>{`${Math.floor(weather?.main?.temp - 273)}°C`}</span>
+              {`  |  ${weather?.weather[0].description}`}
+            </Condition>
+            <WeatherIcon src={WeatherIcons[weather?.weather[0].icon]} />
+            <BackButton onClick={onBackButtonClick}>
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </BackButton>
+            <ForecastButton onClick={() => setShowForecast(true)}>
+              Forecast
+            </ForecastButton>{" "}
+            {/* Tahmin butonuna tıklamada tahmin sayfasının görünürlüğünü true yap */}
+          </WeatherContainer>
+          <Location>{`${weather?.name}, ${weather?.sys?.country}`}</Location>
+          <WeatherInfoContainer>
+            <WeatherInfoComponent
+              name={"Thermal_Sensation"}
+              value={`${Math.floor(weather?.main?.feels_like - 273)}°C`}
+            />
+            <WeatherInfoComponent
+              name={isDay ? "Sunset" : "Sunrise"}
+              value={`${getTime(weather?.sys[isDay ? "sunset" : "sunrise"])}`}
+            />
+            <WeatherInfoComponent
+              name={"Humidity"}
+              value={weather?.main?.humidity}
+            />
+            <WeatherInfoComponent name={"Wind"} value={weather?.wind?.speed} />
+            <WeatherInfoComponent
+              name={"Pressure"}
+              value={weather?.main?.pressure}
+            />
+          </WeatherInfoContainer>
+          <BackButton onClick={onBackButtonClick}>
+            <FontAwesomeIcon icon={faArrowLeft} />
+          </BackButton>
+        </>
+      )}
     </>
   );
 };
