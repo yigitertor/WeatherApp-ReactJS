@@ -169,7 +169,7 @@ const CityComponent = ({ updateCity, fetchWeather }) => {
 
   return (
     <>
-      <AppLogo src={"/icons/logo.png"} />
+      <AppLogo src={"icons/logo.png"} />
       <WelcomeLabel>
         Welcome to <span>TypeWeather</span>
       </WelcomeLabel>
