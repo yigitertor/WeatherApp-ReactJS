@@ -102,7 +102,7 @@ const getDaytimeImage = (weatherCondition) => {
     case "Clear":
       return "https://img.freepik.com/free-vector/sky-background-video-conferencing_23-2148630092.jpg?t=st=1713552459~exp=1713556059~hmac=85ab85d23c68d05e032249590e7f65342ba107f0c258b761df18d17b86ede757&w=900";
     case "Clouds":
-      return "https://www.shutterstock.com/image-photo/dramatic-black-cloud-before-rainy-260nw-549197416.jpg";
+      return "https://suntint.com/sammy/gallere//sunscreen-cloudy-days.jpg";
     case "Rain":
       return "https://cdn.girls.buzz/images/girls.buzz.max-1440x900.webp";
     default:
